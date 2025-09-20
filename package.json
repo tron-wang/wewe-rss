@@ -18,6 +18,7 @@
     "start:web": "pnpm --filter web start",
     "build": "pnpm run -r build",
     "start": "pnpm run start:server",
+    "railway:start": "chmod +x railway-start.sh && ./railway-start.sh",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check ."
   },
