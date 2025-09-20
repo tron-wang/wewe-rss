@@ -16,6 +16,8 @@
     "build:web": "pnpm --filter web build",
     "start:server": "pnpm --filter server start:prod",
     "start:web": "pnpm --filter web start",
+    "build": "pnpm run -r build",
+    "start": "pnpm run start:server",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check ."
   },
