@@ -21,5 +21,9 @@
   },
   "devDependencies": {
     "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "@prisma/client": "5.10.1",
+    "prisma": "5.10.1"
   }
 }
