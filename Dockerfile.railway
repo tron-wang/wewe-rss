@@ -1,0 +1,41 @@
+FROM node:20-alpine
+
+# 安裝 pnpm
+RUN npm install -g pnpm
+
+# 設置工作目錄
+WORKDIR /app
+
+# 複製 package 文件
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/server/package.json ./apps/server/
+COPY apps/web/package.json ./apps/web/
+
+# 安裝依賴
+RUN pnpm install --frozen-lockfile
+
+# 複製源代碼
+COPY . .
+
+# 構建項目
+RUN pnpm run build
+
+# 設置 SQLite 數據庫
+RUN cd apps/server && \
+    rm -rf prisma && \
+    mv prisma-sqlite prisma && \
+    npx prisma generate --schema prisma/schema.prisma
+
+# 創建數據目錄
+RUN mkdir -p data
+
+# 暴露端口
+EXPOSE 4000
+
+# 設置環境變量
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=4000
+
+# 啟動命令
+CMD ["pnpm", "run", "start:server"]
